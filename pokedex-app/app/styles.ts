@@ -10,7 +10,6 @@ interface ButtonProps {
 
 export const Container = styled.SafeAreaView`
 	flex: 1;
-	justify-content: center;
 	align-items: center;
 	background-color: #f5fcff;
 `;
@@ -20,6 +19,7 @@ export const ContainerItem = styled.View<ContainerItemProps>`
 	align-items: center;
 	justify-content: center;
 	padding: 18px;
+	margin-bottom: 80px;
 `;
 
 export const ImageCard = styled.Image`
@@ -47,7 +47,7 @@ export const Button = styled.TouchableOpacity<ButtonProps>`
 	margin: 15px;
 	border-radius: 100px;
 	position: absolute;
-	bottom: 100px;
+	bottom: 60px;
 `;
 
 export const ButtonText = styled.Text`

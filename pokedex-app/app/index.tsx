@@ -52,6 +52,16 @@ export default function Onboarding() {
 
 	return (
 		<Container>
+			<Image
+				source={require("../assets/images/Onboarding/logoOnboarding.png")}
+				style={{
+					width: 80,
+					height: 80,
+					position: "absolute",
+					bottom: 10,
+				}}
+				resizeMode="contain"
+			/>
 			<FlatList
 				data={[onboardingData[currentPage]]}
 				renderItem={handleItems}
