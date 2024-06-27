@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { View, Text, FlatList, Image, Dimensions } from "react-native";
+import React from "react";
+import { FlatList, Image, Dimensions } from "react-native";
 import useApp from "./_useApp";
 import {
 	Button,
@@ -21,21 +21,8 @@ type handleItemsProps = {
 };
 
 export default function Onboarding() {
-	const [currentPage, setCurrentPage] = useState(0);
-	const { onboardingData } = useApp();
-
+	const { onboardingData, currentPage, handleNext } = useApp();
 	const width = Dimensions.get("window").width.toFixed(0);
-
-	const handleNext = () => {
-		if (currentPage < onboardingData.length - 1) {
-			setCurrentPage(currentPage + 1);
-		} else {
-			if (currentPage === onboardingData.length - 1) {
-				console.log("fim");
-				setCurrentPage(0);
-			}
-		}
-	};
 
 	function handleItems({ item }: handleItemsProps) {
 		return (
@@ -53,7 +40,7 @@ export default function Onboarding() {
 	return (
 		<Container>
 			<Image
-				source={require("../assets/images/Onboarding/logoOnboarding.png")}
+				source={require("../src/assets/images/Onboarding/logoOnboarding.png")}
 				style={{
 					width: 80,
 					height: 80,
