@@ -7,28 +7,37 @@ interface ButtonProps {
 interface ContainerItemProps {
 	weight: string;
 	size: string;
-	marginTop?: string;
+}
+
+interface ContentProps {
+	width: number;
 }
 
 export const Container = styled.View`
 	flex: 1;
 	width: 100%;
-	gap: 64px;
 	padding: 20px;
 	background-color: #fff;
 	align-items: center;
 `;
 
-export const Content = styled.View`
-	width: 100%;
-	justify-content: center;
+export const Content = styled.View<ContentProps>`
+	width: ${({ width }) => width - 40}px;
+	height: "100%";
+	justify-content: start;
 	align-items: flex-start;
+`;
+
+export const HeaderContainer = styled.View`
+	width: 100%;
+	margin: 46px;
+	justify-content: center;
+	align-items: center;
 `;
 export const Title = styled.Text<ContainerItemProps>`
 	font-size: ${({ size }) => size}px;
 	font-weight: ${({ weight }) => weight};
 	text-align: center;
-	margin-top: ${({ marginTop }) => marginTop}px;
 `;
 
 export const SubTitle = styled.Text`
@@ -48,6 +57,11 @@ export const TextInput = styled.TextInput`
 	background-color: #fff;
 `;
 
+export const ImageData = styled.Image`
+	width: 250px;
+	height: 250px;
+	resize: contain;
+`;
 export const Button = styled.TouchableOpacity<ButtonProps>`
 	background-color: #173ea5;
 	width: ${({ width }) => width - 200}px;
@@ -55,8 +69,6 @@ export const Button = styled.TouchableOpacity<ButtonProps>`
 	padding: 10px;
 	margin: 15px;
 	border-radius: 100px;
-	position: absolute;
-	bottom: 60px;
 `;
 
 export const ButtonText = styled.Text`

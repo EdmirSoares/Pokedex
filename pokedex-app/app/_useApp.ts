@@ -36,9 +36,9 @@ export default function useApp() {
 	const onboardingData = [
 		{
 			id: 1,
-			title: "Todos os Pokémons em um só Lugar!",
+			title: "Bem vindo ao mundo maravilhoso dos pokemons!",
 			textComplementar:
-				"Acesse uma vasta lista de Pokémon de todas as gerações já feitas pela Nintendo",
+				"Aqui você encontra todos os pokemons, suas habilidades, fraquezas e muito mais!",
 			textButton: "Continuar",
 			image: require("../src/assets/images/Onboarding/image135.png"),
 		},
@@ -65,7 +65,7 @@ export default function useApp() {
 			setCurrentPage(currentPage + 1);
 		} else {
 			if (currentPage === onboardingData.length - 1) {
-				console.log("foi para o SingIn");
+				router.push("SingIn");
 				markAsViewed();
 			}
 		}

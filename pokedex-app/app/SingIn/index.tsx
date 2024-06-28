@@ -1,43 +1,83 @@
 import React from "react";
-import { TouchableWithoutFeedback, Keyboard } from "react-native";
 import useApp from "./_useApp";
+import { TouchableWithoutFeedback, FlatList, Dimensions } from "react-native";
 
 import {
 	Button,
 	ButtonText,
 	Container,
 	Content,
+	HeaderContainer,
+	ImageData,
 	SubTitle,
 	TextInput,
 	Title,
 } from "./styles";
 
+type handleItemsProps = {
+	item: {
+		id: number;
+		titleHeader: string;
+		title: string;
+		subTitle: string;
+		placeholder: string;
+		subTitleName: string;
+		image: any;
+		value: string;
+		function: (value: string) => void;
+	};
+};
+
 export default function SingIn() {
-	const { userName, setuserName } = useApp();
+	const { data, currentPage, handleNext, userName } = useApp();
+	const width = Dimensions.get("window").width.toFixed(0);
+
+	function handleItems({ item }: handleItemsProps) {
+		return (
+			<Content width={parseInt(width)}>
+				<Title size="26" weight="400">
+					{item.title}
+				</Title>
+				<Title size="26" weight="700">
+					{item.subTitle}
+				</Title>
+				<TextInput
+					placeholder={item.placeholder}
+					value={item.value}
+					onChangeText={(value) => item.function(value)}
+					keyboardType={item.id === 1 ? "numeric" : "default"}
+				/>
+				{item.value.length > 3 && (
+					<SubTitle>{item.subTitleName}</SubTitle>
+				)}
+				<ImageData
+					source={item.image}
+					resizeMode="contain"
+					style={{ alignSelf: "center" }}
+				/>
+			</Content>
+		);
+	}
 
 	return (
-		<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+		<TouchableWithoutFeedback>
 			<Container>
-				<Title size="26" weight="700" marginTop="46">
-					Primeiro Passo
-				</Title>
-				<Content>
-					<Title size="26" weight="400">
-						Vamos começar!
-					</Title>
+				<HeaderContainer>
 					<Title size="26" weight="700">
-						Nos diga o seu nome
+						Primeiro Passo
 					</Title>
-					<TextInput
-						placeholder="Qual o seu nome?"
-						value={userName}
-						onChangeText={(value) => setuserName(value)}
-					/>
-					{userName.length > 3 && (
-						<SubTitle>Parece um belo nome!</SubTitle>
-					)}
-				</Content>
-				<Button width={400}>
+				</HeaderContainer>
+				<FlatList
+					data={[data[currentPage]]}
+					renderItem={handleItems}
+					keyExtractor={(item) => item.id.toString()}
+					horizontal
+					alwaysBounceHorizontal={false}
+					snapToAlignment="start"
+					decelerationRate={"fast"}
+					showsHorizontalScrollIndicator={false}
+				/>
+				<Button onPress={handleNext} width={400}>
 					<ButtonText>Continuar</ButtonText>
 				</Button>
 			</Container>
