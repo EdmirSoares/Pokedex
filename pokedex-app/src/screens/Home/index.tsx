@@ -1,6 +1,6 @@
 import React from "react";
 import { FlatList, Image, Dimensions } from "react-native";
-import useApp from "./_useApp";
+import useApp from "./useApp";
 import {
 	Button,
 	ButtonText,
@@ -40,7 +40,7 @@ export default function Onboarding() {
 	return (
 		<Container>
 			<Image
-				source={require("../src/assets/images/Onboarding/logoOnboarding.png")}
+				source={require("../../assets/images/Onboarding/image135.png")}
 				style={{
 					width: 80,
 					height: 80,

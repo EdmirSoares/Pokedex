@@ -1,11 +1,11 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useRouter } from "expo-router";
+import { useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 
 export default function useApp() {
 	const [currentPage, setCurrentPage] = useState(0);
 	const [viewed, setViewed] = useState(false);
-	const router = useRouter();
+	const navigation = useNavigation();
 
 	useEffect(() => {
 		checkViewStatus();
@@ -17,7 +17,7 @@ export default function useApp() {
 
 			if (viewStatus) {
 				setViewed(true);
-				router.push("SingIn");
+				navigation.navigate("SingIn");
 			}
 		} catch (error) {
 			console.error("Erro ao verificar", error);

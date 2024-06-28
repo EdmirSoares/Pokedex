@@ -19,13 +19,12 @@ export const Container = styled.View`
 	padding: 20px;
 	background-color: #fff;
 	align-items: center;
+	justify-content: center;
 `;
 
 export const Content = styled.View<ContentProps>`
 	width: ${({ width }) => width - 40}px;
 	height: "100%";
-	justify-content: start;
-	align-items: flex-start;
 `;
 
 export const HeaderContainer = styled.View`
@@ -37,12 +36,12 @@ export const HeaderContainer = styled.View`
 export const Title = styled.Text<ContainerItemProps>`
 	font-size: ${({ size }) => size}px;
 	font-weight: ${({ weight }) => weight};
-	text-align: center;
 `;
 
 export const SubTitle = styled.Text`
 	font-size: 16px;
 	text-align: center;
+	text-align: left;
 `;
 
 export const TextInput = styled.TextInput`
@@ -55,6 +54,10 @@ export const TextInput = styled.TextInput`
 	font-size: 16px;
 	color: #000;
 	background-color: #fff;
+`;
+export const ContentImage = styled.View`
+	width: 100%;
+	align-items: center;
 `;
 
 export const ImageData = styled.Image`

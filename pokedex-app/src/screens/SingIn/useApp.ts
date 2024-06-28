@@ -5,7 +5,6 @@ export default function useApp() {
 	const [currentPage, setCurrentPage] = useState(0);
 	const [userName, setuserName] = useState("");
 	const [userAge, setuserAge] = useState("");
-	console.log(userName, userAge);
 
 	const data = [
 		{
@@ -42,7 +41,7 @@ export default function useApp() {
 		} else if (currentPage === 1) {
 			if (userAge.length > 0) {
 				//setCurrentPage(currentPage + 1);
-				//colocar chamada para próxima página
+				//colocar chamada para próxima página;
 				alert("Finalizado");
 			} else {
 				alert("Preencha o campo corretamente");

@@ -1,12 +1,18 @@
 import React from "react";
-import useApp from "./_useApp";
-import { TouchableWithoutFeedback, FlatList, Dimensions } from "react-native";
+import useApp from "./useApp";
+import {
+	TouchableWithoutFeedback,
+	FlatList,
+	Dimensions,
+	View,
+} from "react-native";
 
 import {
 	Button,
 	ButtonText,
 	Container,
 	Content,
+	ContentImage,
 	HeaderContainer,
 	ImageData,
 	SubTitle,
@@ -29,7 +35,7 @@ type handleItemsProps = {
 };
 
 export default function SingIn() {
-	const { data, currentPage, handleNext, userName } = useApp();
+	const { data, currentPage, handleNext } = useApp();
 	const width = Dimensions.get("window").width.toFixed(0);
 
 	function handleItems({ item }: handleItemsProps) {
@@ -50,11 +56,9 @@ export default function SingIn() {
 				{item.value.length > 3 && (
 					<SubTitle>{item.subTitleName}</SubTitle>
 				)}
-				<ImageData
-					source={item.image}
-					resizeMode="contain"
-					style={{ alignSelf: "center" }}
-				/>
+				<ContentImage>
+					<ImageData source={item.image} />
+				</ContentImage>
 			</Content>
 		);
 	}
