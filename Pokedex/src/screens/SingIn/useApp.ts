@@ -53,7 +53,6 @@ export default function useApp() {
 		} else if (currentPage === 1) {
 			if (userAge.length > 0) {
 				saveData();
-				console.log("Salvou");
 			} else {
 				alert("Preencha o campo corretamente");
 			}
