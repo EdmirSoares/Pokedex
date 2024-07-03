@@ -1,4 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getPokemonData } from "../../../services/request/index";
 import { useEffect, useState } from "react";
 
 interface UserDataProps {
@@ -6,11 +7,33 @@ interface UserDataProps {
 	userAge: string;
 }
 
-export default function useApp(): { userData: UserDataProps } {
+interface GetPokemonProps {
+	pokemonName: string;
+}
+
+interface PokemonDataProps {
+	name: string;
+}
+
+export default function useApp(): {
+	pokemonGet: string;
+	setPokemonGet: (value: string) => void;
+	pokemonData: {};
+	userData: UserDataProps;
+	getPokemon: (pokemonName: GetPokemonProps) => void;
+} {
+	const [pokemonGet, setPokemonGet] = useState("");
+	const [pokemonData, setPokemonData] = useState<PokemonDataProps>({
+		name: "",
+	});
 	const [userData, setUserData] = useState<UserDataProps>({
 		userName: "",
 		userAge: "",
 	});
+
+	useEffect(() => {
+		getDadosUser();
+	}, []);
 
 	async function getDadosUser() {
 		try {
@@ -23,11 +46,27 @@ export default function useApp(): { userData: UserDataProps } {
 		}
 	}
 
+	async function getPokemon(pokemonName: GetPokemonProps) {
+		try {
+			const response = await getPokemonData(pokemonName);
+			if (response) {
+				setPokemonData(response);
+			}
+		} catch (error) {
+			console.error("Error fetching Pokémon data:", error);
+			throw error;
+		}
+	}
+
 	useEffect(() => {
-		getDadosUser();
-	}, []);
+		console.log(pokemonData);
+	}, [pokemonData]);
 
 	return {
-		userData: userData,
+		pokemonGet,
+		setPokemonGet,
+		userData,
+		getPokemon,
+		pokemonData,
 	};
 }

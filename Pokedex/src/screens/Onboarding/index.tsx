@@ -52,7 +52,7 @@ export default function Onboarding() {
 			<FlatList
 				data={[onboardingData[currentPage]]}
 				renderItem={handleItems}
-				keyExtractor={(item) => item.id.toString()}
+				keyExtractor={(item) => item.id}
 				horizontal
 				pagingEnabled
 				bounces={false}
