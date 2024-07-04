@@ -11,21 +11,37 @@ interface GetPokemonProps {
 	pokemonName: string;
 }
 
-interface PokemonDataProps {
+interface PokemonType {
+	type: {
+		name: string;
+	};
+}
+
+interface PokemonSprite {
+	other: {
+		"official-artwork": {
+			front_default: string;
+		};
+	};
+}
+
+interface PokemonData {
 	name: string;
+	id: number;
+	weight: number;
+	sprites: PokemonSprite;
+	types: PokemonType[];
 }
 
 export default function useApp(): {
 	pokemonGet: string;
 	setPokemonGet: (value: string) => void;
-	pokemonData: {};
+	pokemonData: PokemonData;
 	userData: UserDataProps;
 	getPokemon: (pokemonName: GetPokemonProps) => void;
 } {
 	const [pokemonGet, setPokemonGet] = useState("");
-	const [pokemonData, setPokemonData] = useState<PokemonDataProps>({
-		name: "",
-	});
+	const [pokemonData, setPokemonData] = useState("");
 	const [userData, setUserData] = useState<UserDataProps>({
 		userName: "",
 		userAge: "",

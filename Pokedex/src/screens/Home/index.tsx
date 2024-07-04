@@ -2,6 +2,7 @@ import React from "react";
 import useApp from "./useApp";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
+import typeColors from "../../../types/pokemonTypes";
 import {
 	Container,
 	ContainerItem,
@@ -9,15 +10,21 @@ import {
 	HeaderContainer,
 	PokemonCard,
 	PokemonImage,
+	PokemonImageSmall,
+	PokemonInfoContent,
+	PokemonViewContainer,
+	PokemonViewHeaderContent,
 	RecentSection,
 	RoundButton,
+	RowContent,
 	SearchBar,
 	TextComponent,
 	TextInput,
+	TypeContent,
 	TypeTag,
 	UserHeader,
 } from "./style";
-import { Dimensions, FlatList, View } from "react-native";
+import { Dimensions, FlatList } from "react-native";
 
 type PokemonDataTestProps = {
 	item: {
@@ -34,7 +41,6 @@ const Home = () => {
 	const { userData, pokemonGet, setPokemonGet, getPokemon, pokemonData } =
 		useApp();
 	const width = parseInt(Dimensions.get("window").width.toFixed(0));
-	console.log(pokemonGet);
 
 	const pokemonDataTest = [
 		{
@@ -69,19 +75,11 @@ const Home = () => {
 		return (
 			<ContainerItem width={width}>
 				<RecentSection>
-					<PokemonImage source={item.image} />
+					<PokemonImageSmall source={item.image} />
 					<PokemonCard>
 						<TextComponent size={16} weight={700}>
 							{item.name}
 						</TextComponent>
-						{/* <TextComponent
-							size={12}
-							weight={400}
-							numberOfLines={1}
-							ellipsizeMode="tail"
-						>
-							{item.description}
-						</TextComponent> */}
 						<TypeTag color={"#75A03E"}>
 							<TextComponent
 								size={12}
@@ -139,9 +137,16 @@ const Home = () => {
 					autoCapitalize="none"
 					value={pokemonGet}
 					onChangeText={(text) => setPokemonGet(text.toLowerCase())}
+					onSubmitEditing={() => {
+						getPokemon({ pokemonName: pokemonGet });
+						setPokemonGet("");
+					}}
 				/>
 				<RoundButton
-					onPress={() => getPokemon({ pokemonName: pokemonGet })}
+					onPress={() => {
+						getPokemon({ pokemonName: pokemonGet });
+						setPokemonGet("");
+					}}
 				>
 					<Feather name="search" size={20} color="1B1C20" />
 				</RoundButton>
@@ -162,20 +167,90 @@ const Home = () => {
 					showsHorizontalScrollIndicator={false}
 				/>
 			</EmphasisContent>
-			<View
-				style={{
-					flex: 1,
-					justifyContent: "center",
-					alignItems: "center",
-					backgroundColor: "red",
-				}}
-			>
-				{pokemonData.name === "" ? (
-					<TextComponent>Carregando...</TextComponent>
+			<PokemonViewContainer>
+				{pokemonData ? (
+					<PokemonViewHeaderContent>
+						<PokemonImage
+							source={{
+								uri: pokemonData.sprites.other[
+									"official-artwork"
+								].front_default,
+							}}
+							resizeMode="contain"
+						/>
+						<PokemonInfoContent>
+							<TextComponent size={24} weight={700}>
+								{pokemonData.name.charAt(0).toUpperCase() +
+									pokemonData.name.slice(1)}
+							</TextComponent>
+							<RowContent>
+								<TextComponent size={12} weight={700}>
+									Id:
+								</TextComponent>
+								<TextComponent size={12} weight={700}>
+									{pokemonData.id}
+								</TextComponent>
+							</RowContent>
+							<RowContent>
+								<TextComponent size={12} weight={700}>
+									Peso:
+								</TextComponent>
+								<TextComponent size={12} weight={700}>
+									{pokemonData.weight} kg
+								</TextComponent>
+							</RowContent>
+							<TypeContent>
+								<TypeTag
+									color={
+										typeColors[
+											pokemonData.types[0].type.name
+										]
+									}
+								>
+									<TextComponent
+										size={12}
+										weight={700}
+										color={"#fff"}
+									>
+										{pokemonData.types[0].type.name
+											.charAt(0)
+											.toUpperCase() +
+											pokemonData.types[0].type.name.slice(
+												1
+											)}
+									</TextComponent>
+								</TypeTag>
+								{pokemonData.types[1] && (
+									<TypeTag
+										color={
+											typeColors[
+												pokemonData.types[1].type.name
+											]
+										}
+									>
+										<TextComponent
+											size={12}
+											weight={700}
+											color={"#fff"}
+										>
+											{pokemonData.types[1].type.name
+												.charAt(0)
+												.toUpperCase() +
+												pokemonData.types[1].type.name.slice(
+													1
+												)}
+										</TextComponent>
+									</TypeTag>
+								)}
+							</TypeContent>
+						</PokemonInfoContent>
+					</PokemonViewHeaderContent>
 				) : (
-					<TextComponent>{pokemonData.name}</TextComponent>
+					<>
+						<TextComponent>Busque por um Pokemon!</TextComponent>
+					</>
 				)}
-			</View>
+			</PokemonViewContainer>
 		</Container>
 	);
 };

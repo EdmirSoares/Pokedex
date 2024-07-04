@@ -38,7 +38,7 @@ export const UserHeader = styled.View`
 export const TextComponent = styled.Text<TextComponentProps>`
 	font-size: ${({ size }) => (size ? size : 16)}px;
 	font-weight: ${({ weight }) => (weight ? weight : 400)};
-	color: ${({ color }) => (color ? color : "#1b1c20")};
+	color: ${({ color }) => (color ? color : "#1a1a1a")};
 	text-align: ${({ align }) => (align ? align : "left")};
 `;
 
@@ -92,15 +92,33 @@ export const PokemonCard = styled.View`
 	gap: 8px;
 `;
 
-export const PokemonImage = styled.Image`
+export const PokemonImageSmall = styled.Image`
 	width: 80px;
 	height: 80px;
-	background-color: bisque;
 	border-radius: 10px;
+`;
+export const PokemonImage = styled.Image`
+	width: 140px;
+	height: 140px;
+	border-radius: 10px;
+	background-color: #fff;
+`;
+
+export const RowContent = styled.View`
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	align-self: flex-start;
+	padding: 2px 10px;
+	border-radius: 99px;
+	gap: 8px;
+	margin-top: 8px;
+	background-color: #dee0e3;
 `;
 
 export const TypeContent = styled.View`
 	flex-direction: row;
+	margin-top: 6px;
 	width: 80%;
 	gap: 8px;
 `;
@@ -112,5 +130,25 @@ export const TypeTag = styled.View<TypeTagProps>`
 	flex-direction: row;
 	align-items: center;
 	justify-content: center;
-	width: 80%;
+`;
+
+export const PokemonViewContainer = styled.View`
+	flex: 1;
+	width: 100%;
+	margin-top: 20px;
+	padding: 16px;
+	background-color: #f6f8fa;
+	border-radius: 16px;
+	align-items: center;
+`;
+
+export const PokemonInfoContent = styled.View`
+	flex: 1;
+	margin-left: 16px;
+`;
+
+export const PokemonViewHeaderContent = styled.View`
+	flex-direction: row;
+	align-items: flex-end;
+	justify-content: space-between;
 `;
