@@ -5,16 +5,12 @@ import { Feather } from "@expo/vector-icons";
 import typeColors from "../../../types/pokemonTypes";
 import {
 	Container,
-	ContainerItem,
 	EmphasisContent,
 	HeaderContainer,
-	PokemonCard,
 	PokemonImage,
-	PokemonImageSmall,
 	PokemonInfoContent,
 	PokemonViewContainer,
 	PokemonViewHeaderContent,
-	RecentSection,
 	RoundButton,
 	RowContent,
 	SearchBar,
@@ -23,24 +19,17 @@ import {
 	TypeContent,
 	TypeTag,
 	UserHeader,
+	UserHeaderContent,
 } from "./style";
-import { Dimensions, FlatList } from "react-native";
-
-type PokemonDataTestProps = {
-	item: {
-		id: number;
-		name: string;
-		typeOne: string;
-		typeTwo?: string;
-		description: string;
-		image: any;
-	};
-};
+import { Dimensions, FlatList, ImageBackground } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import SmallCard from "../../components/SmallCard";
 
 const Home = () => {
 	const { userData, pokemonGet, setPokemonGet, getPokemon, pokemonData } =
 		useApp();
 	const width = parseInt(Dimensions.get("window").width.toFixed(0));
+	const height = parseInt(Dimensions.get("window").height.toFixed(0));
 
 	const pokemonDataTest = [
 		{
@@ -71,64 +60,57 @@ const Home = () => {
 		},
 	];
 
-	function handleItens({ item }: PokemonDataTestProps) {
-		return (
-			<ContainerItem width={width}>
-				<RecentSection>
-					<PokemonImageSmall source={item.image} />
-					<PokemonCard>
-						<TextComponent size={16} weight={700}>
-							{item.name}
-						</TextComponent>
-						<TypeTag color={"#75A03E"}>
-							<TextComponent
-								size={12}
-								weight={700}
-								color={"#fff"}
-							>
-								{item.typeOne}
-							</TextComponent>
-						</TypeTag>
-						{item.typeTwo && (
-							<TypeTag color={"#E6D637"}>
-								<TextComponent
-									size={12}
-									weight={700}
-									align="center"
-								>
-									{item.typeTwo}
-								</TextComponent>
-							</TypeTag>
-						)}
-					</PokemonCard>
-				</RecentSection>
-			</ContainerItem>
-		);
-	}
-
 	return (
 		<Container>
+			{pokemonData && (
+				<>
+					<LinearGradient
+						colors={["rgb(255, 255, 255)", "rgba(55, 4, 4, 0.8)"]}
+						locations={[0.2, 0.8]}
+						style={{
+							position: "absolute",
+							width: width,
+							height: height,
+						}}
+					/>
+					<ImageBackground
+						source={{
+							uri: pokemonData.sprites.other["official-artwork"]
+								.front_default,
+						}}
+						resizeMode="cover"
+						blurRadius={70}
+						style={{
+							position: "absolute",
+							width: width,
+							height: height,
+						}}
+					/>
+				</>
+			)}
+
 			<HeaderContainer>
 				<UserHeader>
-					<TextComponent size={24} weight={700}>
-						Olá, {userData.userName}{" "}
-						<MaterialIcons
-							name="catching-pokemon"
-							size={16}
-							color="#aa1a1a"
-						/>
-					</TextComponent>
-					<TextComponent size={14}>
-						É um prazer te ver aqui!
-					</TextComponent>
+					<UserHeaderContent>
+						<TextComponent size={24} weight={700}>
+							{`Olá, `}
+							<TextComponent size={24} weight={400}>
+								{userData.userName.charAt(0).toUpperCase() +
+									userData.userName.slice(1) +
+									"! "}
+								<MaterialIcons
+									name="catching-pokemon"
+									size={16}
+									color="#aa1a1a"
+								/>
+							</TextComponent>
+						</TextComponent>
+
+						<TextComponent size={14} weight={500}>
+							É um prazer te ver aqui!
+						</TextComponent>
+					</UserHeaderContent>
 				</UserHeader>
-				<RoundButton
-					padding={12}
-					radius={99}
-					backgroundColor={"#f6f8fa"}
-				>
-					<Feather name="bell" size={20} color="#1B1C20" />
-				</RoundButton>
 			</HeaderContainer>
 			<SearchBar>
 				<TextInput
@@ -138,17 +120,17 @@ const Home = () => {
 					value={pokemonGet}
 					onChangeText={(text) => setPokemonGet(text.toLowerCase())}
 					onSubmitEditing={() => {
-						getPokemon({ pokemonName: pokemonGet });
-						setPokemonGet("");
+						pokemonGet.length >= 3
+							? getPokemon({ pokemonName: pokemonGet })
+							: null;
 					}}
 				/>
 				<RoundButton
 					onPress={() => {
 						getPokemon({ pokemonName: pokemonGet });
-						setPokemonGet("");
 					}}
 				>
-					<Feather name="search" size={20} color="1B1C20" />
+					<Feather name="search" size={20} color="#1B1C20" />
 				</RoundButton>
 			</SearchBar>
 			<EmphasisContent>
@@ -157,7 +139,7 @@ const Home = () => {
 				</TextComponent>
 				<FlatList
 					data={pokemonDataTest}
-					renderItem={handleItens}
+					renderItem={SmallCard}
 					keyExtractor={(item) => item.id.toString()}
 					horizontal
 					pagingEnabled
@@ -196,7 +178,8 @@ const Home = () => {
 									Peso:
 								</TextComponent>
 								<TextComponent size={12} weight={700}>
-									{pokemonData.weight} kg
+									{pokemonData.weight.toString().slice(0, -1)}
+									,{pokemonData.weight.toString().slice(-1)}
 								</TextComponent>
 							</RowContent>
 							<TypeContent>
@@ -207,11 +190,7 @@ const Home = () => {
 										]
 									}
 								>
-									<TextComponent
-										size={12}
-										weight={700}
-										color={"#fff"}
-									>
+									<TextComponent size={12} weight={700}>
 										{pokemonData.types[0].type.name
 											.charAt(0)
 											.toUpperCase() +

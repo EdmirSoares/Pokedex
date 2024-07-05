@@ -17,13 +17,10 @@ interface TypeTagProps {
 	color: string;
 }
 
-interface ContainerItemProps {
-	width: number;
-}
-
 export const Container = styled.View`
 	flex: 1;
 	padding: 40px 24px 24px 24px;
+	position: relative;
 	background-color: #fff;
 `;
 export const HeaderContainer = styled.View`
@@ -33,12 +30,17 @@ export const HeaderContainer = styled.View`
 
 export const UserHeader = styled.View`
 	flex: 1;
+	flex-direction: row;
+`;
+
+export const UserHeaderContent = styled.View`
+	flex: 1;
 `;
 
 export const TextComponent = styled.Text<TextComponentProps>`
 	font-size: ${({ size }) => (size ? size : 16)}px;
 	font-weight: ${({ weight }) => (weight ? weight : 400)};
-	color: ${({ color }) => (color ? color : "#1a1a1a")};
+	color: ${({ color }) => (color ? color : "#1B1C20")};
 	text-align: ${({ align }) => (align ? align : "left")};
 `;
 
@@ -73,35 +75,10 @@ export const EmphasisContent = styled.View`
 	margin-top: 40px;
 `;
 
-export const RecentSection = styled.View`
-	flex-direction: row;
-	background-color: #f6f8fa;
-	margin-top: 10px;
-	margin-right: 20px;
-	border-radius: 16px;
-	padding: 16px;
-	gap: 16px;
-`;
-
-export const ContainerItem = styled.View<ContainerItemProps>`
-	width: ${({ width }) => width - 160}px;
-`;
-
-export const PokemonCard = styled.View`
-	flex: 1;
-	gap: 8px;
-`;
-
-export const PokemonImageSmall = styled.Image`
-	width: 80px;
-	height: 80px;
-	border-radius: 10px;
-`;
 export const PokemonImage = styled.Image`
 	width: 140px;
 	height: 140px;
 	border-radius: 10px;
-	background-color: #fff;
 `;
 
 export const RowContent = styled.View`

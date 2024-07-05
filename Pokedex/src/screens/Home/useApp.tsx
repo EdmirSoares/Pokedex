@@ -36,12 +36,12 @@ interface PokemonData {
 export default function useApp(): {
 	pokemonGet: string;
 	setPokemonGet: (value: string) => void;
-	pokemonData: PokemonData;
+	pokemonData: PokemonData | null;
 	userData: UserDataProps;
 	getPokemon: (pokemonName: GetPokemonProps) => void;
 } {
 	const [pokemonGet, setPokemonGet] = useState("");
-	const [pokemonData, setPokemonData] = useState("");
+	const [pokemonData, setPokemonData] = useState<PokemonData | null>(null);
 	const [userData, setUserData] = useState<UserDataProps>({
 		userName: "",
 		userAge: "",
@@ -67,6 +67,7 @@ export default function useApp(): {
 			const response = await getPokemonData(pokemonName);
 			if (response) {
 				setPokemonData(response);
+				setPokemonGet("");
 			}
 		} catch (error) {
 			console.error("Error fetching Pokémon data:", error);
