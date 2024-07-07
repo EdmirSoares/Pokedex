@@ -17,7 +17,7 @@ interface TypeTagProps {
 	color: string;
 }
 
-export const Container = styled.View`
+export const Container = styled.KeyboardAvoidingView`
 	flex: 1;
 	padding: 40px 24px 24px 24px;
 	position: relative;
@@ -79,6 +79,7 @@ export const PokemonImage = styled.Image`
 	width: 140px;
 	height: 140px;
 	border-radius: 10px;
+	align-self: flex-start;
 `;
 
 export const RowContent = styled.View`
@@ -110,7 +111,7 @@ export const TypeTag = styled.View<TypeTagProps>`
 `;
 
 export const PokemonViewContainer = styled.View`
-	flex: 1;
+	height: 54%;
 	width: 100%;
 	margin-top: 20px;
 	padding: 16px;
@@ -128,4 +129,10 @@ export const PokemonViewHeaderContent = styled.View`
 	flex-direction: row;
 	align-items: flex-end;
 	justify-content: space-between;
+`;
+
+export const PokemonMainContent = styled.View`
+	width: 100%;
+	margin-top: 16px;
+	gap: 8px;
 `;

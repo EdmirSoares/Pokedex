@@ -1,5 +1,8 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { getPokemonData } from "../../../services/request/index";
+import {
+	getPokemonData,
+	getPokemonSpecies,
+} from "../../../services/request/index";
 import { useEffect, useState } from "react";
 
 interface UserDataProps {
@@ -9,6 +12,10 @@ interface UserDataProps {
 
 interface GetPokemonProps {
 	pokemonName: string;
+}
+
+interface GetPokemonSpeciesProps {
+	pokemonId: number;
 }
 
 interface PokemonType {
@@ -33,14 +40,28 @@ interface PokemonData {
 	types: PokemonType[];
 }
 
+interface PokemonSpecies {
+	flavor_text_entries: [
+		{
+			flavor_text: string;
+			language: {
+				name: string;
+			};
+		}
+	];
+}
+
 export default function useApp(): {
 	pokemonGet: string;
 	setPokemonGet: (value: string) => void;
 	pokemonData: PokemonData | null;
+	pokemonBio: PokemonSpecies | null;
 	userData: UserDataProps;
 	getPokemon: (pokemonName: GetPokemonProps) => void;
+	getPokemonSpeciesData: (pokemonId: GetPokemonSpeciesProps) => void;
 } {
 	const [pokemonGet, setPokemonGet] = useState("");
+	const [pokemonBio, setPokemonBio] = useState<PokemonSpecies | null>(null);
 	const [pokemonData, setPokemonData] = useState<PokemonData | null>(null);
 	const [userData, setUserData] = useState<UserDataProps>({
 		userName: "",
@@ -62,11 +83,24 @@ export default function useApp(): {
 		}
 	}
 
+	async function getPokemonSpeciesData(pokemonId: GetPokemonSpeciesProps) {
+		try {
+			const response = await getPokemonSpecies(pokemonId);
+			if (response) {
+				setPokemonBio(response);
+			}
+		} catch (error) {
+			console.error("Error fetching Pokémon species:", error);
+			throw error;
+		}
+	}
+
 	async function getPokemon(pokemonName: GetPokemonProps) {
 		try {
 			const response = await getPokemonData(pokemonName);
 			if (response) {
 				setPokemonData(response);
+				getPokemonSpeciesData({ pokemonId: response.id });
 				setPokemonGet("");
 			}
 		} catch (error) {
@@ -76,7 +110,7 @@ export default function useApp(): {
 	}
 
 	useEffect(() => {
-		console.log(pokemonData);
+		console.log(pokemonBio);
 	}, [pokemonData]);
 
 	return {
@@ -84,6 +118,8 @@ export default function useApp(): {
 		setPokemonGet,
 		userData,
 		getPokemon,
+		getPokemonSpeciesData,
 		pokemonData,
+		pokemonBio,
 	};
 }

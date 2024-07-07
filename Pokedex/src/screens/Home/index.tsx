@@ -9,6 +9,7 @@ import {
 	HeaderContainer,
 	PokemonImage,
 	PokemonInfoContent,
+	PokemonMainContent,
 	PokemonViewContainer,
 	PokemonViewHeaderContent,
 	RoundButton,
@@ -21,13 +22,20 @@ import {
 	UserHeader,
 	UserHeaderContent,
 } from "./style";
-import { Dimensions, FlatList, ImageBackground } from "react-native";
+import { Dimensions, FlatList, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import SmallCard from "../../components/SmallCard";
+import { StatusBar } from "expo-status-bar";
 
 const Home = () => {
-	const { userData, pokemonGet, setPokemonGet, getPokemon, pokemonData } =
-		useApp();
+	const {
+		userData,
+		pokemonGet,
+		setPokemonGet,
+		getPokemon,
+		pokemonData,
+		pokemonBio,
+	} = useApp();
 	const width = parseInt(Dimensions.get("window").width.toFixed(0));
 	const height = parseInt(Dimensions.get("window").height.toFixed(0));
 
@@ -59,36 +67,18 @@ const Home = () => {
 			image: require("../../assets/images/Pokemons/bulbasaur.png"),
 		},
 	];
-
 	return (
 		<Container>
-			{pokemonData && (
-				<>
-					<LinearGradient
-						colors={["rgb(255, 255, 255)", "rgba(55, 4, 4, 0.8)"]}
-						locations={[0.2, 0.8]}
-						style={{
-							position: "absolute",
-							width: width,
-							height: height,
-						}}
-					/>
-					<ImageBackground
-						source={{
-							uri: pokemonData.sprites.other["official-artwork"]
-								.front_default,
-						}}
-						resizeMode="cover"
-						blurRadius={70}
-						style={{
-							position: "absolute",
-							width: width,
-							height: height,
-						}}
-					/>
-				</>
-			)}
-
+			<StatusBar style="dark" backgroundColor="#E0EFFF" />
+			<LinearGradient
+				colors={["rgba(224, 239, 255, 1)", "#9fbbda"]}
+				locations={[0.2, 0.9]}
+				style={{
+					position: "absolute",
+					width: width,
+					height: height,
+				}}
+			/>
 			<HeaderContainer>
 				<UserHeader>
 					<UserHeaderContent>
@@ -150,60 +140,53 @@ const Home = () => {
 				/>
 			</EmphasisContent>
 			<PokemonViewContainer>
-				{pokemonData ? (
-					<PokemonViewHeaderContent>
-						<PokemonImage
-							source={{
-								uri: pokemonData.sprites.other[
-									"official-artwork"
-								].front_default,
-							}}
-							resizeMode="contain"
-						/>
-						<PokemonInfoContent>
-							<TextComponent size={24} weight={700}>
-								{pokemonData.name.charAt(0).toUpperCase() +
-									pokemonData.name.slice(1)}
-							</TextComponent>
-							<RowContent>
-								<TextComponent size={12} weight={700}>
-									Id:
+				{pokemonData && pokemonBio ? (
+					<>
+						<PokemonViewHeaderContent>
+							<PokemonImage
+								source={{
+									uri: pokemonData.sprites.other[
+										"official-artwork"
+									].front_default,
+								}}
+								resizeMode="contain"
+							/>
+							<PokemonInfoContent>
+								<TextComponent size={24} weight={700}>
+									{pokemonData.name.charAt(0).toUpperCase() +
+										pokemonData.name.slice(1)}
 								</TextComponent>
-								<TextComponent size={12} weight={700}>
-									{pokemonData.id}
-								</TextComponent>
-							</RowContent>
-							<RowContent>
-								<TextComponent size={12} weight={700}>
-									Peso:
-								</TextComponent>
-								<TextComponent size={12} weight={700}>
-									{pokemonData.weight.toString().slice(0, -1)}
-									,{pokemonData.weight.toString().slice(-1)}
-								</TextComponent>
-							</RowContent>
-							<TypeContent>
-								<TypeTag
-									color={
-										typeColors[
-											pokemonData.types[0].type.name
-										]
-									}
-								>
+								<RowContent>
 									<TextComponent size={12} weight={700}>
-										{pokemonData.types[0].type.name
-											.charAt(0)
-											.toUpperCase() +
-											pokemonData.types[0].type.name.slice(
-												1
-											)}
+										Id:
 									</TextComponent>
-								</TypeTag>
-								{pokemonData.types[1] && (
+									<TextComponent size={12} weight={700}>
+										{pokemonData.id}
+									</TextComponent>
+								</RowContent>
+								<RowContent>
+									<TextComponent size={12} weight={700}>
+										Peso:
+									</TextComponent>
+									<TextComponent size={12} weight={700}>
+										{pokemonData.weight
+											.toString()
+											.slice(0, -1)}
+										{pokemonData.weight.toString().length >=
+										2
+											? ","
+											: ""}
+										{pokemonData.weight
+											.toString()
+											.slice(-1)}{" "}
+										kg
+									</TextComponent>
+								</RowContent>
+								<TypeContent>
 									<TypeTag
 										color={
 											typeColors[
-												pokemonData.types[1].type.name
+												pokemonData.types[0].type.name
 											]
 										}
 									>
@@ -212,18 +195,61 @@ const Home = () => {
 											weight={700}
 											color={"#fff"}
 										>
-											{pokemonData.types[1].type.name
+											{pokemonData.types[0].type.name
 												.charAt(0)
 												.toUpperCase() +
-												pokemonData.types[1].type.name.slice(
+												pokemonData.types[0].type.name.slice(
 													1
 												)}
 										</TextComponent>
 									</TypeTag>
-								)}
-							</TypeContent>
-						</PokemonInfoContent>
-					</PokemonViewHeaderContent>
+									{pokemonData.types[1] && (
+										<TypeTag
+											color={
+												typeColors[
+													pokemonData.types[1].type
+														.name
+												]
+											}
+										>
+											<TextComponent
+												size={12}
+												weight={700}
+												color={"#fff"}
+											>
+												{pokemonData.types[1].type.name
+													.charAt(0)
+													.toUpperCase() +
+													pokemonData.types[1].type.name.slice(
+														1
+													)}
+											</TextComponent>
+										</TypeTag>
+									)}
+								</TypeContent>
+							</PokemonInfoContent>
+						</PokemonViewHeaderContent>
+						<PokemonMainContent>
+							<TextComponent size={16} weight={700}>
+								Descrição
+							</TextComponent>
+							<TextComponent
+								size={12}
+								weight={400}
+								numberOfLines={3}
+								ellipsizeMode="tail"
+							>
+								{"     "}
+								{pokemonBio.flavor_text_entries.map((entry) => {
+									if (entry.language.name === "en") {
+										return entry.flavor_text
+											.split("\n")
+											.join(" ");
+									}
+								})}
+							</TextComponent>
+						</PokemonMainContent>
+					</>
 				) : (
 					<>
 						<TextComponent>Busque por um Pokemon!</TextComponent>
