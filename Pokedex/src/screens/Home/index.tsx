@@ -13,6 +13,7 @@ import {
 	PokemonViewContainer,
 	PokemonViewHeaderContent,
 	RoundButton,
+	RowContainer,
 	RowContent,
 	SearchBar,
 	TextComponent,
@@ -248,6 +249,44 @@ const Home = () => {
 									}
 								})}
 							</TextComponent>
+							<TextComponent size={16} weight={700}>
+								Status
+							</TextComponent>
+							<RowContainer>
+								<RowContent>
+									<TextComponent size={12} weight={700}>
+										{pokemonData.stats[0].stat.name
+											.charAt(0)
+											.toUpperCase() +
+											pokemonData.stats[0].stat.name.slice(
+												1
+											)}{" "}
+										{pokemonData.stats[0].base_stat}
+									</TextComponent>
+								</RowContent>
+								<RowContent>
+									<TextComponent size={12} weight={700}>
+										{pokemonData.stats[1].stat.name
+											.charAt(0)
+											.toUpperCase() +
+											pokemonData.stats[1].stat.name.slice(
+												1
+											)}{" "}
+										{pokemonData.stats[1].base_stat}
+									</TextComponent>
+								</RowContent>
+								<RowContent>
+									<TextComponent size={12} weight={700}>
+										{pokemonData.stats[2].stat.name
+											.charAt(0)
+											.toUpperCase() +
+											pokemonData.stats[2].stat.name.slice(
+												1
+											)}{" "}
+										{pokemonData.stats[2].base_stat}
+									</TextComponent>
+								</RowContent>
+							</RowContainer>
 						</PokemonMainContent>
 					</>
 				) : (

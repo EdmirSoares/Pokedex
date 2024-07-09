@@ -1,9 +1,9 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useEffect, useState } from "react";
 import {
 	getPokemonData,
 	getPokemonSpecies,
 } from "../../../services/request/index";
-import { useEffect, useState } from "react";
 
 interface UserDataProps {
 	userName: string;
@@ -32,12 +32,20 @@ interface PokemonSprite {
 	};
 }
 
+interface PokemonStats {
+	base_stat: number;
+	stat: {
+		name: string;
+	};
+}
+
 interface PokemonData {
 	name: string;
 	id: number;
 	weight: number;
 	sprites: PokemonSprite;
 	types: PokemonType[];
+	stats: PokemonStats[];
 }
 
 interface PokemonSpecies {

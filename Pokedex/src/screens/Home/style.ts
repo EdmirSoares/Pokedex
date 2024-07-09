@@ -93,6 +93,14 @@ export const RowContent = styled.View`
 	margin-top: 8px;
 	background-color: #dee0e3;
 `;
+export const RowContainer = styled.View`
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	align-self: flex-start;
+	border-radius: 99px;
+	gap: 8px;
+`;
 
 export const TypeContent = styled.View`
 	flex-direction: row;
