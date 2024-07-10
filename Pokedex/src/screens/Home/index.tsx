@@ -3,30 +3,32 @@ import useApp from "./useApp";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import typeColors from "../../../types/pokemonTypes";
+import { Dimensions, FlatList, Text } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import SmallCard from "../../components/SmallCard";
+import { StatusBar } from "expo-status-bar";
+import RoundButton from "../../components/RoundButton";
+import { RowContainer } from "../../components/RowComponent/styles";
+import { TextComponent } from "../../components/TextComponent/styles";
+import TypeTag from "../../components/Tag";
+import { useNavigation } from "@react-navigation/native";
 import {
 	Container,
 	EmphasisContent,
 	HeaderContainer,
+	NavigationContent,
 	PokemonImage,
 	PokemonInfoContent,
 	PokemonMainContent,
 	PokemonViewContainer,
 	PokemonViewHeaderContent,
-	RoundButton,
-	RowContainer,
 	RowContent,
 	SearchBar,
-	TextComponent,
 	TextInput,
 	TypeContent,
-	TypeTag,
 	UserHeader,
 	UserHeaderContent,
 } from "./style";
-import { Dimensions, FlatList, View } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
-import SmallCard from "../../components/SmallCard";
-import { StatusBar } from "expo-status-bar";
 
 const Home = () => {
 	const {
@@ -37,8 +39,10 @@ const Home = () => {
 		pokemonData,
 		pokemonBio,
 	} = useApp();
+	const navigation = useNavigation();
 	const width = parseInt(Dimensions.get("window").width.toFixed(0));
 	const height = parseInt(Dimensions.get("window").height.toFixed(0));
+	const [isvisible, setIsVisible] = React.useState(false);
 
 	const pokemonDataTest = [
 		{
@@ -117,12 +121,11 @@ const Home = () => {
 					}}
 				/>
 				<RoundButton
-					onPress={() => {
-						getPokemon({ pokemonName: pokemonGet });
-					}}
-				>
-					<Feather name="search" size={20} color="#1B1C20" />
-				</RoundButton>
+					onPress={() => getPokemon({ pokemonName: pokemonGet })}
+					children={
+						<Feather name="search" size={20} color="#1B1C20" />
+					}
+				></RoundButton>
 			</SearchBar>
 			<EmphasisContent>
 				<TextComponent size={16} weight={700}>
@@ -249,12 +252,17 @@ const Home = () => {
 									}
 								})}
 							</TextComponent>
-							<TextComponent size={16} weight={700}>
-								Status
-							</TextComponent>
+
 							<RowContainer>
-								<RowContent>
-									<TextComponent size={12} weight={700}>
+								<TextComponent size={14} weight={700}>
+									Status
+								</TextComponent>
+								<TypeTag color={"#aa1a1a"}>
+									<TextComponent
+										size={10}
+										weight={700}
+										color={"#fff"}
+									>
 										{pokemonData.stats[0].stat.name
 											.charAt(0)
 											.toUpperCase() +
@@ -263,9 +271,13 @@ const Home = () => {
 											)}{" "}
 										{pokemonData.stats[0].base_stat}
 									</TextComponent>
-								</RowContent>
-								<RowContent>
-									<TextComponent size={12} weight={700}>
+								</TypeTag>
+								<TypeTag color={"#52abba"}>
+									<TextComponent
+										size={10}
+										weight={700}
+										color={"#fff"}
+									>
 										{pokemonData.stats[1].stat.name
 											.charAt(0)
 											.toUpperCase() +
@@ -274,9 +286,13 @@ const Home = () => {
 											)}{" "}
 										{pokemonData.stats[1].base_stat}
 									</TextComponent>
-								</RowContent>
-								<RowContent>
-									<TextComponent size={12} weight={700}>
+								</TypeTag>
+								<TypeTag color={"#767676"}>
+									<TextComponent
+										size={10}
+										weight={700}
+										color={"#FFF"}
+									>
 										{pokemonData.stats[2].stat.name
 											.charAt(0)
 											.toUpperCase() +
@@ -285,9 +301,33 @@ const Home = () => {
 											)}{" "}
 										{pokemonData.stats[2].base_stat}
 									</TextComponent>
-								</RowContent>
+								</TypeTag>
 							</RowContainer>
 						</PokemonMainContent>
+						<NavigationContent>
+							{isvisible && (
+								<RoundButton
+									onPress={() => {
+										navigation.navigate("Details");
+									}}
+									padding="12px"
+									backgroundColor="#f5f5f5"
+									radius={99}
+								>
+									<Text>teste</Text>
+								</RoundButton>
+							)}
+							<RoundButton
+								onPress={() => {
+									setIsVisible(!isvisible);
+								}}
+								padding="12px"
+								backgroundColor="#f5f5f5"
+								radius={99}
+							>
+								<Feather name="plus" size={16} color="black" />
+							</RoundButton>
+						</NavigationContent>
 					</>
 				) : (
 					<>

@@ -1,18 +1,5 @@
 import styled from "styled-components/native";
 
-interface TextComponentProps {
-	size?: number;
-	weight?: number;
-	color?: string;
-	align?: string;
-}
-
-interface RoundButtonProps {
-	padding?: number;
-	radius?: number;
-	backgroundColor?: string;
-}
-
 interface TypeTagProps {
 	color: string;
 }
@@ -35,21 +22,6 @@ export const UserHeader = styled.View`
 
 export const UserHeaderContent = styled.View`
 	flex: 1;
-`;
-
-export const TextComponent = styled.Text<TextComponentProps>`
-	font-size: ${({ size }) => (size ? size : 16)}px;
-	font-weight: ${({ weight }) => (weight ? weight : 400)};
-	color: ${({ color }) => (color ? color : "#1B1C20")};
-	text-align: ${({ align }) => (align ? align : "left")};
-`;
-
-export const RoundButton = styled.TouchableOpacity<RoundButtonProps>`
-	padding: ${({ padding }) => (padding ? padding : 0)}px;
-	border-radius: ${({ radius }) => (radius ? radius : 0)}px;
-	align-items: center;
-	justify-content: center;
-	background-color: ${({ backgroundColor }) => backgroundColor};
 `;
 
 export const SearchBar = styled.View`
@@ -93,12 +65,14 @@ export const RowContent = styled.View`
 	margin-top: 8px;
 	background-color: #dee0e3;
 `;
+
 export const RowContainer = styled.View`
 	flex-direction: row;
 	align-items: center;
 	justify-content: center;
 	align-self: flex-start;
 	border-radius: 99px;
+	margin-top: 8px;
 	gap: 8px;
 `;
 
@@ -119,7 +93,7 @@ export const TypeTag = styled.View<TypeTagProps>`
 `;
 
 export const PokemonViewContainer = styled.View`
-	height: 54%;
+	height: 50%;
 	width: 100%;
 	margin-top: 20px;
 	padding: 16px;
@@ -142,5 +116,16 @@ export const PokemonViewHeaderContent = styled.View`
 export const PokemonMainContent = styled.View`
 	width: 100%;
 	margin-top: 16px;
-	gap: 8px;
+	gap: 6px;
+`;
+
+export const NavigationContent = styled.View`
+	position: absolute;
+	bottom: 16px;
+	right: 16px;
+	align-self: flex-end;
+	flex-direction: row;
+	justify-content: flex-end;
+	elevation: 6;
+	border-radius: 99px;
 `;

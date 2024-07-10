@@ -39,6 +39,12 @@ interface PokemonStats {
 	};
 }
 
+interface PokemonAbilities {
+	ability: {
+		name: string;
+	};
+}
+
 interface PokemonData {
 	name: string;
 	id: number;
@@ -46,6 +52,7 @@ interface PokemonData {
 	sprites: PokemonSprite;
 	types: PokemonType[];
 	stats: PokemonStats[];
+	abilities: PokemonAbilities[];
 }
 
 interface PokemonSpecies {
