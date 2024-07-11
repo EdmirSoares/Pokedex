@@ -1,5 +1,6 @@
 import React from "react";
 import { FlatList, Image, Dimensions } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import useApp from "./useApp";
 import {
 	Button,
@@ -9,7 +10,7 @@ import {
 	SubTitle,
 	Title,
 } from "./styles";
-
+import { StatusBar } from "expo-status-bar";
 type handleItemsProps = {
 	item: {
 		id: number;
@@ -22,7 +23,8 @@ type handleItemsProps = {
 
 export default function Onboarding() {
 	const { onboardingData, currentPage, handleNext } = useApp();
-	const width = Dimensions.get("window").width.toFixed(0);
+	const width = Math.round(Dimensions.get("window").width);
+	const height = Math.round(Dimensions.get("window").height);
 
 	function handleItems({ item }: handleItemsProps) {
 		return (
@@ -30,7 +32,7 @@ export default function Onboarding() {
 				<Image source={item.image} resizeMode="contain" />
 				<Title>{item.title}</Title>
 				<SubTitle>{item.textComplementar}</SubTitle>
-				<Button onPress={handleNext} width={parseInt(width)}>
+				<Button onPress={handleNext} width={width}>
 					<ButtonText>{item.textButton}</ButtonText>
 				</Button>
 			</ContainerItem>
@@ -39,6 +41,16 @@ export default function Onboarding() {
 
 	return (
 		<Container>
+			<StatusBar style="dark" backgroundColor="#E0EFFF" />
+			<LinearGradient
+				colors={["rgba(224, 239, 255, 1)", "#9fbbda"]}
+				locations={[0.2, 0.9]}
+				style={{
+					position: "absolute",
+					width: width,
+					height: height,
+				}}
+			/>
 			<Image
 				source={require("../../assets/images/Onboarding/logoOnboarding.png")}
 				style={{

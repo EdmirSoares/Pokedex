@@ -11,8 +11,8 @@ export default function LoggedOut() {
 			initialRouteName="Onboarding"
 			screenOptions={{ headerShown: false }}
 		>
-			<Stack.Screen name="Onboarding" component={Onboarding} />
 			<Stack.Screen name="SingIn" component={SingIn} />
+			<Stack.Screen name="Onboarding" component={Onboarding} />
 		</Stack.Navigator>
 	);
 }

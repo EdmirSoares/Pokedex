@@ -31,13 +31,13 @@ export default function useApp() {
 			image: require("../../assets/images/Onboarding/sprite_hilda 1.png"),
 		},
 	];
-
+	console.log(currentPage);
 	const handleNext = () => {
 		if (currentPage < onboardingData.length - 1) {
 			setCurrentPage(currentPage + 1);
 		} else {
 			if (currentPage === onboardingData.length - 1) {
-				navigation.navigate("SignIn");
+				navigation.navigate("SingIn");
 			}
 		}
 	};

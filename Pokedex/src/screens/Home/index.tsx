@@ -3,7 +3,7 @@ import useApp from "./useApp";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import typeColors from "../../../types/pokemonTypes";
-import { Dimensions, FlatList, Text } from "react-native";
+import { Dimensions, FlatList, Image, Text, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import SmallCard from "../../components/SmallCard";
 import { StatusBar } from "expo-status-bar";
@@ -29,6 +29,8 @@ import {
 	UserHeader,
 	UserHeaderContent,
 } from "./style";
+import { MotiText, MotiView } from "moti";
+import LottieView from "lottie-react-native";
 
 const Home = () => {
 	const {
@@ -120,12 +122,27 @@ const Home = () => {
 							: null;
 					}}
 				/>
-				<RoundButton
-					onPress={() => getPokemon({ pokemonName: pokemonGet })}
-					children={
-						<Feather name="search" size={20} color="#1B1C20" />
-					}
-				></RoundButton>
+				<MotiView
+					from={{
+						scale: 0.9,
+					}}
+					animate={{
+						scale: 1,
+					}}
+					transition={{
+						loop: true,
+						type: "timing",
+						duration: 500,
+						delay: 300,
+					}}
+				>
+					<RoundButton
+						onPress={() => getPokemon({ pokemonName: pokemonGet })}
+						children={
+							<Feather name="search" size={20} color="#1B1C20" />
+						}
+					></RoundButton>
+				</MotiView>
 			</SearchBar>
 			<EmphasisContent>
 				<TextComponent size={16} weight={700}>
@@ -330,9 +347,17 @@ const Home = () => {
 						</NavigationContent>
 					</>
 				) : (
-					<>
-						<TextComponent>Busque por um Pokemon!</TextComponent>
-					</>
+					<View
+						style={{
+							justifyContent: "center",
+							alignItems: "center",
+							flex: 1,
+						}}
+					>
+						<TextComponent size={20} weight={700} color={"#c4c4c4"}>
+							Busque por um Pokemon!
+						</TextComponent>
+					</View>
 				)}
 			</PokemonViewContainer>
 		</Container>

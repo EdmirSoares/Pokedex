@@ -6,7 +6,7 @@ interface TypeTagProps {
 
 export const Container = styled.KeyboardAvoidingView`
 	flex: 1;
-	padding: 40px 24px 24px 24px;
+	padding: 60px 24px 24px 24px;
 	position: relative;
 	background-color: #fff;
 `;
@@ -25,7 +25,7 @@ export const UserHeaderContent = styled.View`
 `;
 
 export const SearchBar = styled.View`
-	background-color: #f6f8fa;
+	background-color: #fff;
 	flex-direction: row;
 	align-items: center;
 	justify-content: space-between;
