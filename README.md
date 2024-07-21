@@ -1,6 +1,6 @@
 # Pokedex App 📱!
 
-> App sendo desenvolvido como um projeto de estudos para aprender e aprimorar conhecimentos em desenvolvimento mobile com React Native, Expo e Typescript.
+> App está sendo desenvolvido como um projeto de estudos para aprender e aprimorar conhecimentos em desenvolvimento mobile com React Native, Expo e Typescript.
 <img src="https://i.ibb.co/gSjznz1/Pokemon-1-1.jpg" alt="Exemplo imagem">
 
 
